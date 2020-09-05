@@ -1,0 +1,19 @@
+db:
+  image: postgres
+  env_file:
+    - .env
+  ports:
+    - "5439:5432"
+app:
+  build: .
+  env_file:
+    - .env
+  command: bundle exec puma -C config/puma.rb
+  volumes:
+    - .:/opt/myapp/
+  ports:
+    - "3009:3000"
+  links:
+    - db
+  stdin_open: true
+  tty: true
